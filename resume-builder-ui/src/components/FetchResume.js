@@ -57,6 +57,7 @@ const FetchResume = () => {
                             <p><b>Current Designation:</b> {resume.currentDesignation}</p>
                             <p><b>Current Job Description:</b> {resume.currentJobDescription}</p>
                             <p><b>Current Company:</b> {resume.currentCompany}</p>
+                            <p>------------------------------------------------------------</p>
                         </div>
                     ))}
                 </div>
