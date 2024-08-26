@@ -8,6 +8,7 @@ current job company
 
 # API Endpoints:
 Domain: http://localhost:8080/
+
 POST:
     - /api/uploadResumeDetails
     - Input is JSON containing all the attributes (name, title, description, company)
