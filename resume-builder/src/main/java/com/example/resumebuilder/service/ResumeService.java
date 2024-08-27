@@ -5,10 +5,7 @@ import com.example.resumebuilder.repository.ResumeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ResumeService {
@@ -16,7 +13,13 @@ public class ResumeService {
     private ResumeRepo resumeRepo;
 
     public Resume save(Resume resume){
-        return resumeRepo.save(resume);
+        try{
+            return resumeRepo.save(resume);
+        }
+        catch (Exception exception){
+            System.out.println("Error in saving resume details: " + exception);
+            return null;
+        }
     }
 
     public Optional<Resume> getById(Long id){
@@ -24,18 +27,24 @@ public class ResumeService {
     }
 
     public List<Resume> findByName(String name){
-        String[] fullName = name.split("\\+");
-        String firstName = fullName[0];
-        String lastName = fullName[1];
-        List<Resume> fullMatch = resumeRepo.findByFirstNameAndLastName(firstName, lastName);
+        try {
+            String[] fullName = name.split("\\+");
+            String firstName = fullName[0];
+            String lastName = fullName[1];
+            List<Resume> fullMatch = resumeRepo.findByFirstNameAndLastName(firstName, lastName);
 
-        if(fullMatch.isEmpty()){
-            Set<Resume> matches = new HashSet<>();
-            matches.addAll(resumeRepo.findByFirstName(firstName));
-            matches.addAll(resumeRepo.findByLastName(lastName));
+            if(fullMatch.isEmpty()){
+                Set<Resume> matches = new HashSet<>();
+                matches.addAll(resumeRepo.findByFirstName(firstName));
+                matches.addAll(resumeRepo.findByLastName(lastName));
 
-            return List.copyOf(matches);
+                return List.copyOf(matches);
+            }
+            return fullMatch;
         }
-        return fullMatch;
+        catch (Exception exception){
+            System.out.println("Error in finding by name: " + exception);
+            return Collections.emptyList();
+        }
     }
 }
