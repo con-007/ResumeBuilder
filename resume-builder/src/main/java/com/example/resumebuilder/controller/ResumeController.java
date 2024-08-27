@@ -2,8 +2,10 @@ package com.example.resumebuilder.controller;
 
 import com.example.resumebuilder.model.Resume;
 import com.example.resumebuilder.service.ResumeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,12 +13,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class ResumeController {
     @Autowired
     private ResumeService resumeService;
 
     @PostMapping("/uploadResumeDetails")
-    public ResponseEntity<Long> uploadResumeDetails(@RequestBody Resume resume){
+    public ResponseEntity<Long> uploadResumeDetails(@Valid @RequestBody Resume resume){
         Resume generatedResume = resumeService.save(resume);
         if(generatedResume == null)
             return ResponseEntity.badRequest().build();
