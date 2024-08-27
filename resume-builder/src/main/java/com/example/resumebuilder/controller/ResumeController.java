@@ -3,6 +3,7 @@ package com.example.resumebuilder.controller;
 import com.example.resumebuilder.model.Resume;
 import com.example.resumebuilder.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +16,24 @@ public class ResumeController {
     private ResumeService resumeService;
 
     @PostMapping("/uploadResumeDetails")
-    public Long uploadResumeDetails(@RequestBody Resume resume){
+    public ResponseEntity<Long> uploadResumeDetails(@RequestBody Resume resume){
         Resume generatedResume = resumeService.save(resume);
-        return generatedResume.getId();
+        if(generatedResume == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(generatedResume.getId());
     }
 
     @GetMapping("/getResumeById/{id}")
-    public Optional<Resume> getResumeById(@PathVariable Long id){
-        return resumeService.getById(id);
+    public ResponseEntity<Resume> getResumeById(@PathVariable Long id){
+        Optional<Resume> resume  = resumeService.getById(id);
+        return resume.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getResumeByName/{name}")
-    public List<Resume> getResumeByName(@PathVariable String name){
-        return resumeService.findByName(name);
+    public ResponseEntity<List<Resume>> getResumeByName(@PathVariable String name){
+        List<Resume> resumes = resumeService.findByName(name);
+        if(resumes.isEmpty())
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(resumes);
     }
 }
