@@ -45,33 +45,37 @@ const FetchResume = () => {
                 />
                 <button onClick={fetchByName}>Fetch by Name</button>
             </div>
-            {Array.isArray(resumeData) ? (
-                <div align="left" style={{marginLeft:50}}>
-                    <h3>Resume List:</h3>
-                    {resumeData.map((resume, index) => (
-                        <div key={index}>
-                            <h4>Resume Details:</h4>
-                            <p><b>ID:</b> {resume.id}</p>
-                            <p><b>Name:</b> {resume.firstName} {resume.lastName}</p>
-                            <p><b>Email:</b> {resume.email}</p>
-                            <p><b>Current Designation:</b> {resume.currentDesignation}</p>
-                            <p><b>Current Job Description:</b> {resume.currentJobDescription}</p>
-                            <p><b>Current Company:</b> {resume.currentCompany}</p>
-                            <p>------------------------------------------------------------</p>
-                        </div>
-                    ))}
-                </div>
-            ): resumeData && (
-                <div align="left" style={{marginLeft:50}}>
-                    <h3>Resume Details:</h3>
-                    <p><b>ID</b>: {resumeData.id}</p>
-                    <p><b>Name:</b> {resumeData.firstName} {resumeData.lastName}</p>
-                    <p><b>Email:</b> {resumeData.email}</p>
-                    <p><b>Current Designation:</b> {resumeData.currentDesignation}</p>
-                    <p><b>Current Job Description:</b> {resumeData.currentJobDescription}</p>
-                    <p><b>Current Company:</b> {resumeData.currentCompany}</p>
-                </div>
-            )}
+            <div align="left" style={{ marginLeft: 50 }}>
+                {resumeData === null ? (
+                    <p>Nothing to show here yet!</p>
+                ) : Array.isArray(resumeData) ? (
+                    <>
+                        <h3>Resume List:</h3>
+                        {resumeData.map((resume, index) => (
+                            <div key={index}>
+                                <h4>Resume Details:</h4>
+                                <p><b>ID:</b> {resume.id}</p>
+                                <p><b>Name:</b> {resume.firstName} {resume.lastName}</p>
+                                <p><b>Email:</b> {resume.email}</p>
+                                <p><b>Current Designation:</b> {resume.currentDesignation}</p>
+                                <p><b>Current Job Description:</b> {resume.currentJobDescription}</p>
+                                <p><b>Current Company:</b> {resume.currentCompany}</p>
+                                <p>------------------------------------------------------------</p>
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        <h3>Resume Details:</h3>
+                        <p><b>ID</b>: {resumeData.id}</p>
+                        <p><b>Name:</b> {resumeData.firstName} {resumeData.lastName}</p>
+                        <p><b>Email:</b> {resumeData.email}</p>
+                        <p><b>Current Designation:</b> {resumeData.currentDesignation}</p>
+                        <p><b>Current Job Description:</b> {resumeData.currentJobDescription}</p>
+                        <p><b>Current Company:</b> {resumeData.currentCompany}</p>
+                    </>
+                )}
+            </div>
             
         </div>
     );
