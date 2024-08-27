@@ -1,20 +1,33 @@
 package com.example.resumebuilder.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 
 @Entity
 public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "First name cannot be empty")
     private String firstName;
+
+    @NotBlank(message = "Last name cannot be empty")
     private String lastName;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email format should be valid")
+    @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "Current designation cannot be empty")
     private String currentDesignation;
+
+    @NotBlank(message = "Current job description cannot be empty")
     private String currentJobDescription;
+
+    @NotBlank(message = "Current company cannot be empty")
     private String currentCompany;
 
     public Long getId() {
