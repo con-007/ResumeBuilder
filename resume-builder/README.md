@@ -1,6 +1,6 @@
 ## Setup
 1. Clone the repository
-2. In the resume-builder directory:
+2. To run the application:
    ```
    cd resume-builder
    mvn clean install (to build the application)
